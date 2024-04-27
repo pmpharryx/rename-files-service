@@ -1,0 +1,39 @@
+{
+  "name": "rename-files-service",
+  "version": "1.0.0",
+  "description": "A service for renaming files using UUID.",
+  "main": "index.js",
+  "scripts": {
+    "develop": "npx nodemon",
+    "start": "npm run build && node build/index.js",
+    "build": "rimraf ./build && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
+  },
+  "keywords": [
+    "TypeScript",
+    "UUID",
+    "Renaming files"
+  ],
+  "author": "pmpharryx",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmpharryx/rename-files-service.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/node": "^20.11.10",
+    "@types/uuid": "^9.0.8",
+    "husky": "^9.0.11",
+    "nodemon": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1"
+  }
+}
