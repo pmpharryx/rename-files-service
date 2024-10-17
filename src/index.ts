@@ -41,6 +41,15 @@ function isUUID(str: string): boolean {
 }
 
 /**
+ * Checks if a given file name is .gitkeep file.
+ * @param {string} fileName - The file name to check.
+ * @returns {boolean} True if the file name is .gitkeep file, false otherwise.
+ */
+function isGitKeep(fileName: string): boolean {
+  return fileName === ".gitkeep";
+}
+
+/**
  * Renames files in a specified directory by replacing a UUID to their names.
  * @param {string} directoryName - The name of the directory to process.
  * @returns {Promise<void>} A Promise that resolves once the renaming process is complete.
@@ -71,8 +80,8 @@ async function renameProcess(directoryName: string): Promise<void> {
     // Iterate through each file and rename it
     for (const fileName of fileNames) {
       try {
-        // Skip files that already have a UUID in their names
-        if (isUUID(path.parse(fileName).name)) continue;
+        // Skip files that already have a UUID in their names or is .gitkeep file
+        if (isUUID(path.parse(fileName).name) || isGitKeep(fileName)) continue;
 
         const fileExtension = path.extname(fileName);
         const newFileName = getNewFilename(fileExtension);
