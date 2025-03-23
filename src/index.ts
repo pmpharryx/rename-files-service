@@ -70,8 +70,11 @@ async function renameProcess(directoryName: string): Promise<void> {
     }
 
     // Get the list of file names in the directory
-    const fileNames = await getFiles(directoryPath);
-    
+    let fileNames = await getFiles(directoryPath);
+
+    // Filter out .gitkeep files
+    fileNames = fileNames.filter((fileName) => !isGitKeep(fileName));
+
     const total = fileNames.length;
     let done = 0;
 
@@ -80,8 +83,8 @@ async function renameProcess(directoryName: string): Promise<void> {
     // Iterate through each file and rename it
     for (const fileName of fileNames) {
       try {
-        // Skip files that already have a UUID in their names or is .gitkeep file
-        if (isUUID(path.parse(fileName).name) || isGitKeep(fileName)) continue;
+        // Skip files that already have a UUID in their names
+        if (isUUID(path.parse(fileName).name)) continue;
 
         const fileExtension = path.extname(fileName);
         const newFileName = getNewFilename(fileExtension);
@@ -124,7 +127,11 @@ startRenameFilesService();
  * @param {string} fileExtension - The file extension for the empty files (e.g., ".txt").
  * @returns {Promise<void>} A Promise that resolves once the empty files are created.
  */
-async function createEmptyFiles(directoryPath: string, n: number, fileExtension: string): Promise<void> {
+async function createEmptyFiles(
+  directoryPath: string,
+  n: number,
+  fileExtension: string
+): Promise<void> {
   try {
     // Ensure the directory exists
     const directoryExists = await fs
